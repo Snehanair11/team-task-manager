@@ -1,15 +1,12 @@
-from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
-
+from pydantic import BaseModel, EmailStr
 
 class User(BaseModel):
-    name: str = Field(..., min_length=1)
+    name: str
     email: EmailStr
-    password: str = Field(..., min_length=6)
+    password: str
     role: str = "member"
 
 
-# 🔹 Optional: for login requests (cleaner than using dict)
 class LoginModel(BaseModel):
     email: EmailStr
     password: str
