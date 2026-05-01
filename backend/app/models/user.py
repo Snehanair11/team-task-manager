@@ -6,7 +6,6 @@ class User(BaseModel):
     password: str
     role: str = "member"
 
-
 class LoginModel(BaseModel):
     email: EmailStr
     password: str
