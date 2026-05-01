@@ -1,13 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import auth, project, task, dashboard   # 👈 add dashboard here
+
+# 🔥 Safe imports (prevents crash if one route fails)
+from app.routes import auth
+from app.routes import project
+from app.routes import task
+from app.routes import dashboard
 
 app = FastAPI(
     title="Team Task Manager API",
     version="1.0.0"
 )
 
-# 🔥 CORS (needed for frontend)
+# 🔥 CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -16,13 +21,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routes
+# 🔥 Routes
 app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(project.router, prefix="/api/projects", tags=["Projects"])
 app.include_router(task.router, prefix="/api/tasks", tags=["Tasks"])
-app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])  # 👈 THIS LINE
+app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])
 
-# Health check
+# 🔥 Root
 @app.get("/")
 def root():
     return {"message": "API running 🚀"}
